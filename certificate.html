@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Certificate | Sanjivani NextGen Hackathon</title>
+
+  <link rel="stylesheet" href="./main.css">
+
+  <style>
+    body {
+      background: #080b12;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+
+    .certificate-page {
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .certificate-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .certificate-header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .certificate-header p {
+      color: #9ca3af;
+      margin: 0;
+    }
+
+    .certificate {
+      width: min(100%, 1050px);
+      aspect-ratio: 1.414 / 1;
+      background:
+        radial-gradient(circle at top right, rgba(0, 214, 255, .13), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(124, 58, 237, .13), transparent 30%),
+        #111722;
+      border: 2px solid rgba(255,255,255,.18);
+      border-radius: 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+    }
+
+    .certificate::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 15px;
+      pointer-events: none;
+    }
+
+    .corner {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border: 3px solid #00d4ff;
+      opacity: .7;
+    }
+
+    .corner.tl {
+      top: -70px;
+      left: -70px;
+      border-radius: 50%;
+    }
+
+    .corner.br {
+      bottom: -70px;
+      right: -70px;
+      border-radius: 50%;
+    }
+
+    .certificate-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 55px 75px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .brand {
+      font-size: 15px;
+      letter-spacing: 4px;
+      color: #00d4ff;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-size: clamp(30px, 5vw, 58px);
+      margin: 18px 0 5px;
+      letter-spacing: 3px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      color: #aab3c2;
+      font-size: 15px;
+      margin-bottom: 25px;
+    }
+
+    .presented {
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .recipient {
+      font-size: clamp(28px, 4vw, 48px);
+      margin: 12px 0;
+      font-weight: 700;
+      background: linear-gradient(90deg,#fff,#00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .description {
+      max-width: 720px;
+      color: #c5ccd8;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .hackathon-name {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .certificate-bottom {
+      margin-top: auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+    }
+
+    .signature {
+      text-align: center;
+      min-width: 180px;
+    }
+
+    .signature-line {
+      width: 180px;
+      border-top: 1px solid rgba(255,255,255,.4);
+      margin-bottom: 8px;
+    }
+
+    .signature strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .signature span {
+      color: #8f99a8;
+      font-size: 11px;
+    }
+
+    .cert-id {
+      text-align: left;
+      color: #8f99a8;
+      font-size: 11px;
+    }
+
+    .cert-id strong {
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .action-btn {
+      border: 1px solid rgba(255,255,255,.15);
+      background: #151b27;
+      color: #fff;
+      padding: 13px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .action-btn.primary {
+      background: #00bfe8;
+      color: #041017;
+      border-color: #00bfe8;
+    }
+
+    @media (max-width: 700px) {
+      .certificate-page {
+        padding: 25px 12px;
+      }
+
+      .certificate {
+        aspect-ratio: auto;
+        min-height: 650px;
+      }
+
+      .certificate-content {
+        padding: 55px 30px;
+      }
+
+      .certificate-bottom {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .cert-id {
+        text-align: center;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .certificate-header,
+      .actions {
+        display: none;
+      }
+
+      .certificate-page {
+        padding: 0;
+        min-height: auto;
+      }
+
+      .certificate {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        border: 2px solid #222;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="certificate-page">
+
+    <div class="certificate-header">
+      <h1>Certificate of Achievement</h1>
+      <p>Sanjivani NextGen Hackathon</p>
+    </div>
+
+    <section class="certificate">
+
+      <div class="corner tl"></div>
+      <div class="corner br"></div>
+
+      <div class="certificate-content">
+
+        <div class="brand">
+          Sanjivani University
+        </div>
+
+        <div class="title">
+          CERTIFICATE
+        </div>
+
+        <div class="subtitle">
+          OF PARTICIPATION & INNOVATION
+        </div>
+
+        <div class="presented">
+          This certificate is proudly presented to
+        </div>
+
+        <div class="recipient" id="recipientName">
+          Yash Anil Davange
+        </div>
+
+        <div class="description">
+          For successfully participating in the
+          <span class="hackathon-name">
+            Sanjivani NextGen Hackathon
+          </span>
+          and demonstrating innovation, technical creativity,
+          teamwork and problem-solving through the development
+          of a technology-driven solution.
+        </div>
+
+        <div class="certificate-bottom">
+
+          <div class="cert-id">
+            Certificate ID<br>
+            <strong id="certificateId">SNH-CERT-2026-00001</strong>
+          </div>
+
+          <div class="signature">
+            <div class="signature-line"></div>
+            <strong>Hackathon Coordinator</strong>
+            <span>Sanjivani NextGen Hackathon</span>
+          </div>
+
+          <div class="signature">
+            <div class="signature-line"></div>
+            <strong>Authorized Signatory</strong>
+            <span>Sanjivani University</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="action-btn primary" onclick="window.print()">
+        🖨 PRINT / SAVE PDF
+      </button>
+
+      <a href="./dashboard.html" class="action-btn">
+        ← BACK TO DASHBOARD
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    const storedName = localStorage.getItem("snh_team_leader");
+
+    if (storedName) {
+      document.getElementById("recipientName").textContent = storedName;
+    }
+
+    let certificateId =
+      localStorage.getItem("snh_certificate_id");
+
+    if (!certificateId) {
+      const randomNumber =
+        Math.floor(10000 + Math.random() * 90000);
+
+      certificateId =
+        "SNH-CERT-2026-" + randomNumber;
+
+      localStorage.setItem(
+        "snh_certificate_id",
+        certificateId
+      );
+    }
+
+    document.getElementById("certificateId").textContent =
+      certificateId;
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+</body>
+</html>

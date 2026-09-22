@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Register | Sanjivani NextGen Hackathon</title>
+
+  <link rel="stylesheet" href="./main.css">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    .register-page {
+      min-height: 100vh;
+      padding: 40px 18px;
+      background: #070b14;
+      color: #fff;
+    }
+
+    .register-container {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .register-header h1 {
+      font-size: clamp(30px, 7vw, 52px);
+      margin-bottom: 10px;
+    }
+
+    .register-header p {
+      color: #9ca3af;
+    }
+
+    .register-card {
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px;
+      padding: 25px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 25px 0 15px;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 14px;
+      color: #d1d5db;
+    }
+
+    input,
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #30384a;
+      background: #0d1320;
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #6366f1;
+    }
+
+    .member-box {
+      padding: 16px;
+      margin-top: 12px;
+      border-radius: 16px;
+      border: 1px solid #293244;
+      background: #0b111d;
+    }
+
+    .member-title {
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 22px 0;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .terms input {
+      width: auto;
+      margin-top: 3px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .submit-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message.success {
+      display: block;
+      background: rgba(16,185,129,.12);
+      border: 1px solid #10b981;
+      color: #6ee7b7;
+    }
+
+    .message.error {
+      display: block;
+      background: rgba(239,68,68,.12);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #a5b4fc;
+      text-decoration: none;
+    }
+
+    @media(max-width:650px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .register-card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="register-page">
+
+  <div class="register-container">
+
+    <a href="./index.html" class="back-link">← Back to Hackathon</a>
+
+    <div class="register-header">
+      <h1>Register Your Team</h1>
+      <p>Sanjivani NextGen Hackathon</p>
+    </div>
+
+    <div id="messageBox" class="message"></div>
+
+    <div class="register-card">
+
+      <form id="registrationForm">
+
+        <div class="section-title">Team Information</div>
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label>Team Name *</label>
+            <input
+              type="text"
+              id="teamName"
+              placeholder="Enter your team name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Team Leader Name *</label>
+            <input
+              type="text"
+              id="leaderName"
+              placeholder="Full name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Leader Mobile *</label>
+            <input
+              type="tel"
+              id="leaderMobile"
+              placeholder="10-digit mobile number"
+              maxlength="10"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Leader Email *</label>
+            <input
+              type="email"
+              id="leaderEmail"
+              placeholder="leader@example.com"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>College / Institution *</label>
+            <input
+              type="text"
+              id="college"
+              placeholder="College name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Hackathon Track *</label>
+            <select id="track" required>
+              <option value="">Select Track</option>
+              <option value="Smart Campus & Smart City">
+                Smart Campus & Smart City
+              </option>
+              <option value="FinTech & Entrepreneurship">
+                FinTech & Entrepreneurship
+              </option>
+              <option value="AI & Generative AI">
+                AI & Generative AI
+              </option>
+              <option value="Sustainability & Smart Agriculture">
+                Sustainability & Smart Agriculture
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Team Size *</label>
+            <select id="teamSize" required>
+              <option value="">Select</option>
+              <option value="1">1 Member</option>
+              <option value="2">2 Members</option>
+              <option value="3">3 Members</option>
+              <option value="4">4 Members</option>
+              <option value="5">5 Members</option>
+              <option value="6">6 Members</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="section-title">Team Members</div>
+
+        <div id="membersContainer">
+
+          <div class="member-box">
+            <div class="member-title">Member 1</div>
+
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  class="member-name"
+                  placeholder="Member name"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  class="member-email"
+                  placeholder="member@example.com"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Mobile</label>
+                <input
+                  type="tel"
+                  class="member-mobile"
+                  placeholder="Mobile number"
+                >
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="terms">
+          <input type="checkbox" id="terms" required>
+          <label for="terms">
+            I confirm that the information provided is correct and agree
+            to the rules of Sanjivani NextGen Hackathon.
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          class="submit-btn"
+          id="submitBtn"
+        >
+          CREATE REGISTRATION →
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  /* =========================================
+     SUPABASE CONFIGURATION
+     ========================================= */
+
+  const SUPABASE_URL =
+    "https://tuvnhvtohwzedevluujx.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_NuuG7u9XUp-K399CTqn48g_i_DAY_Lg";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  /* =========================================
+     ELEMENTS
+     ========================================= */
+
+  const form =
+    document.getElementById("registrationForm");
+
+  const submitBtn =
+    document.getElementById("submitBtn");
+
+  const messageBox =
+    document.getElementById("messageBox");
+
+  const teamSize =
+    document.getElementById("teamSize");
+
+  const membersContainer =
+    document.getElementById("membersContainer");
+
+
+  /* =========================================
+     MESSAGE
+     ========================================= */
+
+  function showMessage(message, type) {
+
+    messageBox.className =
+      "message " + type;
+
+    messageBox.innerHTML = message;
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+
+  /* =========================================
+     TEAM SIZE
+     ========================================= */
+
+  teamSize.addEventListener("change", function () {
+
+    const size = Number(this.value);
+
+    membersContainer.innerHTML = "";
+
+    for (let i = 1; i < size; i++) {
+
+      const box =
+        document.createElement("div");
+
+      box.className = "member-box";
+
+      box.innerHTML = `
+        <div class="member-title">
+          Member ${i + 1}
+        </div>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              class="member-name"
+              placeholder="Member name"
+              ${i < size ? "required" : ""}
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              class="member-email"
+              placeholder="member@example.com"
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Mobile</label>
+            <input
+              type="tel"
+              class="member-mobile"
+              placeholder="Mobile number"
+            >
+          </div>
+
+        </div>
+      `;
+
+      membersContainer.appendChild(box);
+    }
+
+  });
+
+
+  /* =========================================
+     REGISTRATION ID
+     ========================================= */
+
+  function generateRegistrationId() {
+
+    const random =
+      Math.floor(1000 + Math.random() * 9000);
+
+    return "SNH-2026-" + random;
+
+  }
+
+
+  /* =========================================
+     SUBMIT
+     ========================================= */
+
+  form.addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+    messageBox.className = "message";
+    messageBox.innerHTML = "";
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "CREATING REGISTRATION...";
+
+    try {
+
+      const teamName =
+        document.getElementById("teamName").value.trim();
+
+      const leaderName =
+        document.getElementById("leaderName").value.trim();
+
+      const leaderEmail =
+        document.getElementById("leaderEmail").value.trim();
+
+      const leaderMobile =
+        document.getElementById("leaderMobile").value.trim();
+
+      const college =
+        document.getElementById("college").value.trim();
+
+      const track =
+        document.getElementById("track").value;
+
+      const size =
+        Number(teamSize.value);
+
+
+      /* =====================================
+         MOBILE VALIDATION
+         ===================================== */
+
+      if (!/^[0-9]{10}$/.test(leaderMobile)) {
+
+        throw new Error(
+          "Please enter a valid 10-digit leader mobile number."
+        );
+
+      }
+
+
+      /* =====================================
+         CHECK EXISTING SESSION
+         ===================================== */
+
+      let {
+        data: {
+          session
+        }
+      } = await supabaseClient.auth.getSession();
+
+
+      /* =====================================
+         CREATE AUTH ACCOUNT
+         ===================================== */
+
+      if (!session) {
+
+        const {
+          data,
+          error
+        } = await supabaseClient.auth.signUp({
+
+          email: leaderEmail,
+
+          password:
+            "SNH@" +
+            Math.random().toString(36).slice(2, 10) +
+            "A1!",
+
+          options: {
+
+            data: {
+              full_name: leaderName
+            }
+
+          }
+
+        });
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        session = data.session;
+
+
+        /*
+         Supabase may require email confirmation.
+         If confirmation is enabled, there will be
+         no session immediately after signup.
+        */
+
+        if (!session) {
+
+          showMessage(
+            "Account created successfully. Please check your email and confirm your account, then return to this page to continue registration.",
+            "success"
+          );
+
+          submitBtn.disabled = false;
+          submitBtn.textContent = "CREATE REGISTRATION →";
+
+          return;
+        }
+
+      }
+
+
+      /* =====================================
+         GET USER
+         ===================================== */
+
+      const user =
+        session.user;
+
+      if (!user || !user.id) {
+
+        throw new Error(
+          "Supabase user session was not created."
+        );
+
+      }
+
+
+      /* =====================================
+         GENERATE REGISTRATION ID
+         ===================================== */
+
+      const registrationId =
+        generateRegistrationId();
+
+
+      /* =====================================
+         CREATE TEAM
+         ===================================== */
+
+      const {
+        data: team,
+        error: teamError
+      } = await supabaseClient
+        .from("teams")
+        .insert({
+
+          user_id: user.id,
+
+          registration_id:
+            registrationId,
+
+          team_name:
+            teamName,
+
+          leader_name:
+            leaderName,
+
+          leader_email:
+            leaderEmail,
+
+          leader_mobile:
+            leaderMobile,
+
+          college:
+            college,
+
+          track:
+            track,
+
+          team_size:
+            size
+
+        })
+        .select()
+        .single();
+
+
+      if (teamError) {
+
+        console.error(
+          "TEAM INSERT ERROR:",
+          teamError
+        );
+
+        throw new Error(
+          teamError.message
+        );
+
+      }
+
+
+      /* =====================================
+         SAVE REGISTRATION DATA
+         ===================================== */
+
+      localStorage.setItem(
+        "snh_registration_id",
+        registrationId
+      );
+
+      localStorage.setItem(
+        "snh_team_id",
+        team.id
+      );
+
+      localStorage.setItem(
+        "snh_team_name",
+        teamName
+      );
+
+
+      /* =====================================
+         SUCCESS
+         ===================================== */
+
+      showMessage(
+        `
+        <strong>Registration successful! 🎉</strong><br><br>
+
+        Registration ID:
+        <strong>${registrationId}</strong><br><br>
+
+        Your team has been successfully registered.
+        Redirecting to payment...
+        `,
+        "success"
+      );
+
+
+      /* =====================================
+         PAYMENT REDIRECT
+         ===================================== */
+
+      setTimeout(function () {
+
+        window.location.href =
+          "./payment.html";
+
+      }, 1500);
+
+
+    } catch (error) {
+
+      console.error(
+        "REGISTRATION ERROR:",
+        error
+      );
+
+      showMessage(
+        `
+        <strong>Registration failed.</strong><br><br>
+        ${error.message || "Unknown error occurred."}
+        `,
+        "error"
+      );
+
+      submitBtn.disabled = false;
+      submitBtn.textContent =
+        "CREATE REGISTRATION →";
+
+    }
+
+  });
+
+</script>
+
+</body>
+</html>

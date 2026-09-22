@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Results | Sanjivani NextGen Hackathon</title>
+
+    <link rel="stylesheet" href="./main.css">
+
+    <style>
+        .results-page {
+            max-width: 1150px;
+            margin: auto;
+            padding: 45px 20px 80px;
+        }
+
+        .page-head {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-head .eyebrow {
+            color: #818cf8;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .page-head h1 {
+            font-size: 46px;
+            margin: 10px 0;
+        }
+
+        .page-head p {
+            color: #9ca3af;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+        }
+
+        .result-status {
+            text-align: center;
+            padding: 16px;
+            border-radius: 15px;
+            background: rgba(245,158,11,0.08);
+            border: 1px solid rgba(245,158,11,0.2);
+            color: #fbbf24;
+            margin-bottom: 35px;
+        }
+
+        .result-status strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .winners {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 45px;
+        }
+
+        .winner-card {
+            position: relative;
+            padding: 28px 22px;
+            text-align: center;
+            border-radius: 22px;
+            background: rgba(17,24,39,0.9);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .winner-card.featured {
+            border-color: rgba(129,140,248,0.55);
+            transform: translateY(-8px);
+        }
+
+        .rank {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #818cf8;
+        }
+
+        .trophy {
+            font-size: 48px;
+            margin: 15px 0;
+        }
+
+        .winner-card h2 {
+            margin: 0 0 8px;
+        }
+
+        .winner-card .team {
+            color: #d1d5db;
+            font-weight: 700;
+        }
+
+        .winner-card .track {
+            color: #9ca3af;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+        .prize {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 8px 13px;
+            border-radius: 50px;
+            background: rgba(99,102,241,0.12);
+            color: #a5b4fc;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: #9ca3af;
+        }
+
+        .awards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .award {
+            padding: 20px;
+            border-radius: 17px;
+            background: rgba(17,24,39,0.85);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .award-icon {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .award h3 {
+            margin: 0 0 7px;
+        }
+
+        .award p {
+            color: #9ca3af;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .pathway {
+            padding: 30px;
+            border-radius: 23px;
+            background: linear-gradient(
+                135deg,
+                rgba(99,102,241,0.13),
+                rgba(139,92,246,0.05)
+            );
+            border: 1px solid rgba(129,140,248,0.25);
+            margin-bottom: 35px;
+        }
+
+        .pathway-head {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .pathway-head h2 {
+            margin-bottom: 8px;
+        }
+
+        .pathway-head p {
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        .pathway-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .path-step {
+            text-align: center;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(15,23,42,0.7);
+        }
+
+        .path-number {
+            width: 40px;
+            height: 40px;
+            margin: auto auto 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #6366f1;
+            font-weight: 800;
+        }
+
+        .path-step h3 {
+            margin: 0 0 6px;
+        }
+
+        .path-step p {
+            color: #9ca3af;
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .finalists {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .finalist {
+            padding: 18px;
+            border-radius: 15px;
+            background: rgba(17,24,39,0.85);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .finalist span {
+            color: #818cf8;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .finalist h3 {
+            margin: 7px 0 4px;
+        }
+
+        .finalist p {
+            margin: 0;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 20px;
+            border-radius: 11px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,#6366f1,#8b5cf6);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.07);
+            color: white;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        @media(max-width:750px) {
+
+            .page-head h1 {
+                font-size: 34px;
+            }
+
+            .winners {
+                grid-template-columns: 1fr;
+            }
+
+            .winner-card.featured {
+                transform: none;
+            }
+
+            .awards,
+            .finalists {
+                grid-template-columns: 1fr;
+            }
+
+            .pathway-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-logo">
+        <strong>SANJIVANI</strong>
+        <span>NextGen Hackathon</span>
+    </div>
+
+    <a href="./dashboard.html" class="btn btn-secondary">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<main class="results-page">
+
+    <!-- HEADER -->
+
+    <section class="page-head">
+
+        <span class="eyebrow">
+            OFFICIAL RESULTS
+        </span>
+
+        <h1>Results & Recognition</h1>
+
+        <p>
+            Celebrating innovative teams, impactful solutions and the
+            projects selected for the next stage of the
+            Sanjivani NextGen journey.
+        </p>
+
+    </section>
+
+
+    <!-- STATUS -->
+
+    <div class="result-status">
+
+        <strong>Results Status</strong>
+
+        <span>
+            Final results will appear here after official evaluation.
+        </span>
+
+    </div>
+
+
+    <!-- WINNERS -->
+
+    <section>
+
+        <div class="section-title">
+            <h2>Winning Teams</h2>
+            <p>
+                Demo placeholders — replace these with official results
+                after judging.
+            </p>
+        </div>
+
+
+        <div class="winners">
+
+            <div class="winner-card">
+
+                <div class="rank">
+                    RUNNER-UP
+                </div>
+
+                <div class="trophy">
+                    🥈
+                </div>
+
+                <h2>Team FutureTech</h2>
+
+                <div class="team">
+                    Smart Campus Solution
+                </div>
+
+                <div class="track">
+                    Smart Campus & Smart City
+                </div>
+
+                <span class="prize">
+                    Runner-Up
+                </span>
+
+            </div>
+
+
+            <div class="winner-card featured">
+
+                <div class="rank">
+                    WINNER
+                </div>
+
+                <div class="trophy">
+                    🏆
+                </div>
+
+                <h2>Team Innovators</h2>
+
+                <div class="team">
+                    ImpactHub
+                </div>
+
+                <div class="track">
+                    Sustainability & Smart Agriculture
+                </div>
+
+                <span class="prize">
+                    Grand Winner
+                </span>
+
+            </div>
+
+
+            <div class="winner-card">
+
+                <div class="rank">
+                    SECOND RUNNER-UP
+                </div>
+
+                <div class="trophy">
+                    🥉
+                </div>
+
+                <h2>Team Nova</h2>
+
+                <div class="team">
+                    FinTech Innovation
+                </div>
+
+                <div class="track">
+                    FinTech & Entrepreneurship
+                </div>
+
+                <span class="prize">
+                    Second Runner-Up
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SPECIAL AWARDS -->
+
+    <section>
+
+        <div class="section-title">
+
+            <h2>Special Recognition</h2>
+
+            <p>
+                Additional recognition categories created for the
+                Sanjivani NextGen platform.
+            </p>
+
+        </div>
+
+
+        <div class="awards">
+
+            <div class="award">
+
+                <div class="award-icon">🌱</div>
+
+                <h3>Sanjivani Green Impact Award</h3>
+
+                <p>
+                    Recognition for a project demonstrating a strong
+                    sustainability or smart-agriculture impact.
+                </p>
+
+            </div>
+
+
+            <div class="award">
+
+                <div class="award-icon">🚀</div>
+
+                <h3>Startup Innovation Award</h3>
+
+                <p>
+                    Recognition for a project with a clearly developed
+                    product or entrepreneurship pathway.
+                </p>
+
+            </div>
+
+
+            <div class="award">
+
+                <div class="award-icon">🤖</div>
+
+                <h3>AI Innovation Award</h3>
+
+                <p>
+                    Recognition for an innovative and responsible use
+                    of AI technologies.
+                </p>
+
+            </div>
+
+
+            <div class="award">
+
+                <div class="award-icon">🏙️</div>
+
+                <h3>Smart Future Award</h3>
+
+                <p>
+                    Recognition for a solution addressing campus,
+                    city or community challenges.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WINNER PATHWAY -->
+
+    <section class="pathway">
+
+        <div class="pathway-head">
+
+            <h2>Winner → Prototype → Impact</h2>
+
+            <p>
+                The journey can continue beyond the hackathon.
+            </p>
+
+        </div>
+
+
+        <div class="pathway-steps">
+
+            <div class="path-step">
+
+                <div class="path-number">
+                    1
+                </div>
+
+                <h3>Winner</h3>
+
+                <p>
+                    Recognition, prize and official
+                    Sanjivani NextGen Innovator status.
+                </p>
+
+            </div>
+
+
+            <div class="path-step">
+
+                <div class="path-number">
+                    2
+                </div>
+
+                <h3>Prototype</h3>
+
+                <p>
+                    Selected teams may receive mentorship,
+                    validation support and prototype-development
+                    opportunities.
+                </p>
+
+            </div>
+
+
+            <div class="path-step">
+
+                <div class="path-number">
+                    3
+                </div>
+
+                <h3>Impact</h3>
+
+                <p>
+                    Strong projects may progress toward pilots,
+                    incubation, research or implementation opportunities,
+                    subject to program terms.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINALISTS -->
+
+    <section>
+
+        <div class="section-title">
+
+            <h2>Finalists</h2>
+
+            <p>
+                Finalist information will be published after evaluation.
+            </p>
+
+        </div>
+
+
+        <div class="finalists">
+
+            <div class="finalist">
+
+                <span>FINALIST 01</span>
+
+                <h3>Team FutureTech</h3>
+
+                <p>
+                    Smart Campus & Smart City
+                </p>
+
+            </div>
+
+
+            <div class="finalist">
+
+                <span>FINALIST 02</span>
+
+                <h3>Team Nova</h3>
+
+                <p>
+                    FinTech & Entrepreneurship
+                </p>
+
+            </div>
+
+
+            <div class="finalist">
+
+                <span>FINALIST 03</span>
+
+                <h3>Team ImpactHub</h3>
+
+                <p>
+                    Sustainability & Smart Agriculture
+                </p>
+
+            </div>
+
+
+            <div class="finalist">
+
+                <span>FINALIST 04</span>
+
+                <h3>Team VisionX</h3>
+
+                <p>
+                    AI & Generative AI
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+        <a
+            href="./certificate.html"
+            class="btn btn-primary"
+        >
+            VIEW CERTIFICATE →
+        </a>
+
+        <a
+            href="./dashboard.html"
+            class="btn btn-secondary"
+        >
+            BACK TO DASHBOARD
+        </a>
+
+    </div>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+</body>
+</html>

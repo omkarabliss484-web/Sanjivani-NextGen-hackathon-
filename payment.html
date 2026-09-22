@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment | Sanjivani NextGen Hackathon</title>
+
+    <link rel="stylesheet" href="./main.css">
+
+    <style>
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(77,124,255,.14),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 70%,
+                    rgba(139,92,246,.12),
+                    transparent 35%
+                ),
+                #050711;
+        }
+
+        .payment-page {
+            min-height: 100vh;
+            padding: 100px 18px 60px;
+        }
+
+        .payment-container {
+            width: min(850px, 100%);
+            margin: auto;
+        }
+
+        .back-link {
+            color: #8d98ad;
+            font-size: 11px;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .payment-header {
+            text-align: center;
+            margin: 35px 0;
+        }
+
+        .payment-header small {
+            color: #35d7ff;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+
+        .payment-header h1 {
+            margin-top: 14px;
+            font-size: clamp(38px, 8vw, 62px);
+            letter-spacing: -3px;
+        }
+
+        .payment-header h1 span {
+            background:
+                linear-gradient(
+                    90deg,
+                    #35d7ff,
+                    #4d7cff,
+                    #8b5cf6
+                );
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .payment-header p {
+            margin-top: 15px;
+            color: #8993a7;
+            font-size: 11px;
+        }
+
+        .payment-card {
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,.10);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.07),
+                    rgba(255,255,255,.025)
+                );
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 90px rgba(0,0,0,.4);
+        }
+
+        .amount-box {
+            text-align: center;
+            padding: 25px;
+            border-radius: 18px;
+            background: rgba(53,215,255,.04);
+            border: 1px solid rgba(53,215,255,.12);
+        }
+
+        .amount-box .label {
+            color: #78849a;
+            font-size: 9px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .amount {
+            margin-top: 8px;
+            font-size: 42px;
+            font-weight: 950;
+        }
+
+        .amount span {
+            color: #35d7ff;
+        }
+
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .section-box {
+            padding: 22px;
+            border-radius: 18px;
+            background: rgba(0,0,0,.16);
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .section-box h2 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .qr-box {
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-placeholder {
+            width: 210px;
+            height: 210px;
+            padding: 12px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .qr-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-text {
+            margin-top: 14px;
+            text-align: center;
+            color: #8993a7;
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            min-width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(77,124,255,.15);
+            border: 1px solid rgba(77,124,255,.25);
+            color: #6f98ff;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .step div strong {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .step div p {
+            color: #69758b;
+            font-size: 8px;
+            line-height: 1.5;
+        }
+
+        .upload-area {
+            margin-top: 25px;
+        }
+
+        .upload-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aeb8ca;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .file-upload {
+            position: relative;
+            border: 1px dashed rgba(53,215,255,.25);
+            border-radius: 14px;
+            padding: 25px 15px;
+            text-align: center;
+            background: rgba(53,215,255,.025);
+            cursor: pointer;
+        }
+
+        .file-upload:hover {
+            border-color: rgba(53,215,255,.55);
+        }
+
+        .file-upload input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .upload-text {
+            color: #d9dfeb;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .upload-subtext {
+            margin-top: 5px;
+            color: #647086;
+            font-size: 8px;
+        }
+
+        #fileName {
+            margin-top: 10px;
+            color: #35d7ff;
+            font-size: 8px;
+            word-break: break-all;
+        }
+
+        .transaction-input {
+            width: 100%;
+            height: 48px;
+            margin-top: 18px;
+            padding: 0 14px;
+            border-radius: 11px;
+            border: 1px solid rgba(255,255,255,.08);
+            outline: none;
+            background: rgba(0,0,0,.20);
+            color: white;
+            font-size: 11px;
+        }
+
+        .transaction-input:focus {
+            border-color: rgba(77,124,255,.55);
+        }
+
+        .confirm-button {
+            width: 100%;
+            height: 52px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 13px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #4d7cff,
+                    #8b5cf6
+                );
+            color: white;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .confirm-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .note {
+            margin-top: 15px;
+            color: #58647a;
+            font-size: 8px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .success {
+            display: none;
+            text-align: center;
+            padding: 35px 10px;
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            margin: auto;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(66,217,154,.1);
+            border: 1px solid rgba(66,217,154,.25);
+            color: #42d99a;
+            font-size: 30px;
+        }
+
+        .success h2 {
+            margin-top: 20px;
+            font-size: 27px;
+        }
+
+        .success p {
+            margin-top: 10px;
+            color: #8b96aa;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .registration-id {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.08);
+            color: #35d7ff;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        @media(max-width:700px) {
+
+            .payment-page {
+                padding: 85px 14px 40px;
+            }
+
+            .payment-card {
+                padding: 18px;
+            }
+
+            .payment-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .qr-placeholder {
+                width: 190px;
+                height: 190px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<section class="payment-page">
+
+    <div class="payment-container">
+
+        <a href="./register.html" class="back-link">
+            ← Back to Registration
+        </a>
+
+
+        <div class="payment-header">
+
+            <small>
+                SANJIVANI NEXTGEN HACKATHON
+            </small>
+
+            <h1>
+                Complete Your
+                <span>Registration</span>
+            </h1>
+
+            <p>
+                Pay the team registration fee and upload
+                your payment proof.
+            </p>
+
+        </div>
+
+
+        <div class="payment-card">
+
+            <div id="paymentForm">
+
+                <div class="amount-box">
+
+                    <div class="label">
+                        TEAM REGISTRATION FEE
+                    </div>
+
+                    <div class="amount">
+                        <span>₹</span>500
+                    </div>
+
+                </div>
+
+
+                <div class="payment-layout">
+
+
+                    <!-- QR PAYMENT -->
+
+                    <div class="section-box qr-box">
+
+                        <h2>
+                            Scan & Pay
+                        </h2>
+
+                        <div class="qr-placeholder">
+
+                            <!--
+                            REPLACE THIS IMAGE WITH
+                            YOUR ACTUAL PAYMENT QR CODE
+
+                            Example:
+                            images/payment-qr.jpg
+                            -->
+
+                            <img
+                                src="./images/payment-qr.jpg"
+                                alt="Payment QR Code"
+                                onerror="this.style.display='none'; this.parentElement.innerHTML='<strong style=&quot;color:#111;font-size:13px;text-align:center;&quot;>ADD YOUR<br>PAYMENT QR<br>IMAGE HERE</strong>';"
+                            >
+
+                        </div>
+
+                        <div class="qr-text">
+                            Scan the QR using any supported
+                            UPI application and pay ₹500.
+                        </div>
+
+                    </div>
+
+
+                    <!-- INSTRUCTIONS -->
+
+                    <div class="section-box">
+
+                        <h2>
+                            Payment Steps
+                        </h2>
+
+                        <div class="steps">
+
+
+                            <div class="step">
+
+                                <div class="step-number">
+                                    1
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Scan QR
+                                    </strong>
+
+                                    <p>
+                                        Open your UPI app and scan
+                                        the payment QR code.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="step">
+
+                                <div class="step-number">
+                                    2
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Pay ₹500
+                                    </strong>
+
+                                    <p>
+                                        Complete the team registration
+                                        payment of ₹500.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="step">
+
+                                <div class="step-number">
+                                    3
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Save Screenshot
+                                    </strong>
+
+                                    <p>
+                                        Take a screenshot showing
+                                        successful payment.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="step">
+
+                                <div class="step-number">
+                                    4
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Upload Proof
+                                    </strong>
+
+                                    <p>
+                                        Upload your payment screenshot
+                                        below.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- UPLOAD -->
+
+                <div class="upload-area">
+
+                    <label class="upload-label">
+                        PAYMENT SCREENSHOT *
+                    </label>
+
+                    <div class="file-upload">
+
+                        <input
+                            type="file"
+                            id="paymentScreenshot"
+                            accept="image/*"
+                            required
+                        >
+
+                        <div class="upload-icon">
+                            ↑
+                        </div>
+
+                        <div class="upload-text">
+                            Tap to upload payment screenshot
+                        </div>
+
+                        <div class="upload-subtext">
+                            JPG / PNG • Maximum 5 MB
+                        </div>
+
+                        <div id="fileName"></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRANSACTION ID -->
+
+                <input
+                    type="text"
+                    class="transaction-input"
+                    id="transactionId"
+                    placeholder="Enter UPI transaction ID / UTR number"
+                    required
+                >
+
+
+                <button
+                    class="confirm-button"
+                    id="confirmButton"
+                >
+                    SUBMIT PAYMENT DETAILS →
+                </button>
+
+
+                <div class="note">
+                    Your payment will be verified by the
+                    hackathon administration team.
+                </div>
+
+            </div>
+
+
+            <!-- SUCCESS -->
+
+            <div class="success" id="successBox">
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+                <h2>
+                    Payment Submitted
+                </h2>
+
+                <p>
+                    Your payment details have been submitted
+                    successfully for verification.
+                </p>
+
+                <div
+                    class="registration-id"
+                    id="registrationId"
+                >
+                    SNH-2026-0001
+                </div>
+
+                <p>
+                    Keep this registration ID safe.
+                    You will use it to track your application.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+const fileInput =
+    document.getElementById("paymentScreenshot");
+
+const fileName =
+    document.getElementById("fileName");
+
+const confirmButton =
+    document.getElementById("confirmButton");
+
+
+fileInput.addEventListener("change", function() {
+
+    if (this.files.length > 0) {
+
+        const file = this.files[0];
+
+        if (file.size > 5 * 1024 * 1024) {
+
+            alert("File must be smaller than 5 MB.");
+
+            this.value = "";
+
+            fileName.textContent = "";
+
+            return;
+        }
+
+        fileName.textContent =
+            "Selected: " + file.name;
+
+    }
+
+});
+
+
+confirmButton.addEventListener("click", function() {
+
+    const file = fileInput.files[0];
+
+    const transactionId =
+        document.getElementById("transactionId")
+        .value.trim();
+
+
+    if (!file) {
+
+        alert(
+            "Please upload your payment screenshot."
+        );
+
+        return;
+    }
+
+
+    if (!transactionId) {
+
+        alert(
+            "Please enter your UPI transaction ID / UTR."
+        );
+
+        return;
+    }
+
+
+    const registrationId =
+        "SNH-2026-" +
+        Math.floor(1000 + Math.random() * 9000);
+
+
+    document.getElementById("registrationId")
+        .textContent = registrationId;
+
+
+    document.getElementById("paymentForm")
+        .style.display = "none";
+
+
+    document.getElementById("successBox")
+        .style.display = "block";
+
+});
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+</body>
+</html>

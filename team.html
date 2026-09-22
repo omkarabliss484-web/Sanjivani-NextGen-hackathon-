@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Team Management | Sanjivani NextGen Hackathon</title>
+
+    <link rel="stylesheet" href="./main.css">
+
+    <style>
+        .team-page {
+            max-width: 1100px;
+            margin: auto;
+            padding: 45px 20px 80px;
+        }
+
+        .page-head {
+            margin-bottom: 30px;
+        }
+
+        .page-head h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .page-head p {
+            color: #9ca3af;
+        }
+
+        .team-card {
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 22px;
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .team-header h2 {
+            margin: 0 0 6px;
+        }
+
+        .team-id {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 50px;
+            background: rgba(34,197,94,0.12);
+            color: #4ade80;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .members {
+            display: grid;
+            gap: 15px;
+        }
+
+        .member {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .member-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg,#6366f1,#8b5cf6);
+            font-weight: 800;
+        }
+
+        .member-info h3 {
+            margin: 0 0 4px;
+            font-size: 16px;
+        }
+
+        .member-info p {
+            margin: 0;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .leader-badge {
+            color: #facc15;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .remove-btn {
+            border: 1px solid rgba(239,68,68,0.3);
+            background: rgba(239,68,68,0.08);
+            color: #f87171;
+            padding: 9px 13px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background: rgba(239,68,68,0.18);
+        }
+
+        .add-member {
+            margin-top: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #111827;
+            color: white;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #6366f1;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,#6366f1,#8b5cf6);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+            color: white;
+        }
+
+        .notice {
+            display: none;
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.25);
+            color: #86efac;
+        }
+
+        @media (max-width: 700px) {
+            .page-head h1 {
+                font-size: 30px;
+            }
+
+            .team-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .member {
+                align-items: flex-start;
+            }
+
+            .member-left {
+                align-items: flex-start;
+            }
+
+            .remove-btn {
+                margin-top: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="nav-logo">
+        <strong>SANJIVANI</strong>
+        <span>NextGen Hackathon</span>
+    </div>
+
+    <a href="./dashboard.html" class="btn btn-secondary">
+        ← Dashboard
+    </a>
+</header>
+
+
+<main class="team-page">
+
+    <div class="page-head">
+        <h1>Team Management</h1>
+        <p>Add, view and manage your hackathon team members.</p>
+    </div>
+
+
+    <!-- TEAM INFORMATION -->
+
+    <section class="team-card">
+
+        <div class="team-header">
+
+            <div>
+                <h2>Team Innovators</h2>
+                <div class="team-id">
+                    Registration ID: <strong>SNH-2026-0001</strong>
+                </div>
+            </div>
+
+            <div class="status">
+                ✓ Registration Confirmed
+            </div>
+
+        </div>
+
+
+        <div class="members" id="membersList">
+
+            <!-- LEADER -->
+
+            <div class="member">
+
+                <div class="member-left">
+
+                    <div class="avatar">Y</div>
+
+                    <div class="member-info">
+                        <h3>Yash Anil Davange</h3>
+                        <p>Team Leader • AIML</p>
+                        <span class="leader-badge">★ TEAM LEADER</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMBER -->
+
+            <div class="member" data-member>
+
+                <div class="member-left">
+
+                    <div class="avatar">A</div>
+
+                    <div class="member-info">
+                        <h3>Aditya Patil</h3>
+                        <p>Full Stack Development</p>
+                    </div>
+
+                </div>
+
+                <button class="remove-btn" onclick="removeMember(this)">
+                    Remove
+                </button>
+
+            </div>
+
+
+            <!-- MEMBER -->
+
+            <div class="member" data-member>
+
+                <div class="member-left">
+
+                    <div class="avatar">R</div>
+
+                    <div class="member-info">
+                        <h3>Rohan Shinde</h3>
+                        <p>UI/UX & Product Design</p>
+                    </div>
+
+                </div>
+
+                <button class="remove-btn" onclick="removeMember(this)">
+                    Remove
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ADD MEMBER -->
+
+    <section class="team-card add-member">
+
+        <h2>Add Team Member</h2>
+
+        <p style="color:#9ca3af;">
+            You can add additional members before the registration deadline.
+        </p>
+
+        <form id="memberForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        id="memberName"
+                        placeholder="Enter member name"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        id="memberEmail"
+                        placeholder="member@email.com"
+                        required
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input
+                        type="tel"
+                        id="memberMobile"
+                        placeholder="10 digit mobile number"
+                        maxlength="10"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>Role / Skill</label>
+
+                    <select id="memberRole" required>
+
+                        <option value="">
+                            Select role
+                        </option>
+
+                        <option>
+                            Full Stack Development
+                        </option>
+
+                        <option>
+                            AI / Machine Learning
+                        </option>
+
+                        <option>
+                            UI/UX & Product Design
+                        </option>
+
+                        <option>
+                            Data Science
+                        </option>
+
+                        <option>
+                            Cybersecurity
+                        </option>
+
+                        <option>
+                            Business / Entrepreneurship
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button type="submit" class="btn btn-primary">
+                    + ADD MEMBER
+                </button>
+
+                <a href="./dashboard.html" class="btn btn-secondary">
+                    BACK TO DASHBOARD
+                </a>
+
+            </div>
+
+        </form>
+
+
+        <div class="notice" id="successMessage">
+            ✓ Team member added successfully.
+        </div>
+
+    </section>
+
+
+    <!-- TEAM RULES -->
+
+    <section class="team-card">
+
+        <h2>Team Guidelines</h2>
+
+        <ul style="color:#9ca3af; line-height:1.9;">
+
+            <li>All team members must provide valid information.</li>
+
+            <li>Team members should be from the registered institution.</li>
+
+            <li>Changes to team information may be restricted after the deadline.</li>
+
+            <li>Only the registered team leader can manage the team.</li>
+
+        </ul>
+
+    </section>
+
+</main>
+
+
+<script>
+
+const form = document.getElementById("memberForm");
+const membersList = document.getElementById("membersList");
+const successMessage = document.getElementById("successMessage");
+
+
+form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("memberName").value.trim();
+
+    const email =
+        document.getElementById("memberEmail").value.trim();
+
+    const mobile =
+        document.getElementById("memberMobile").value.trim();
+
+    const role =
+        document.getElementById("memberRole").value;
+
+
+    if (!name || !email || !mobile || !role) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+        alert("Enter a valid 10 digit mobile number.");
+        return;
+    }
+
+
+    const member = document.createElement("div");
+
+    member.className = "member";
+
+    member.setAttribute("data-member", "");
+
+
+    const firstLetter =
+        name.charAt(0).toUpperCase();
+
+
+    member.innerHTML = `
+
+        <div class="member-left">
+
+            <div class="avatar">
+                ${firstLetter}
+            </div>
+
+            <div class="member-info">
+
+                <h3>${name}</h3>
+
+                <p>${role}</p>
+
+            </div>
+
+        </div>
+
+        <button
+            class="remove-btn"
+            onclick="removeMember(this)"
+        >
+            Remove
+        </button>
+
+    `;
+
+
+    membersList.appendChild(member);
+
+
+    form.reset();
+
+
+    successMessage.style.display = "block";
+
+
+    setTimeout(() => {
+        successMessage.style.display = "none";
+    }, 3000);
+
+});
+
+
+function removeMember(button) {
+
+    const member = button.closest(".member");
+
+    if (confirm("Remove this team member?")) {
+
+        member.remove();
+
+    }
+
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+</body>
+</html>

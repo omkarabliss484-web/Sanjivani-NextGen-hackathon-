@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Challenges | Sanjivani NextGen Hackathon</title>
+
+    <link rel="stylesheet" href="./main.css">
+
+    <style>
+        .challenge-page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 45px 20px 80px;
+        }
+
+        .page-head {
+            margin-bottom: 30px;
+        }
+
+        .page-head h1 {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .page-head p {
+            color: #9ca3af;
+        }
+
+        .challenge-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            padding: 14px 18px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .info-box span {
+            color: #9ca3af;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-box strong {
+            font-size: 15px;
+        }
+
+        .track {
+            margin-bottom: 35px;
+        }
+
+        .track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .track-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .track-number {
+            color: #818cf8;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .problem-card {
+            position: relative;
+            padding: 20px;
+            border-radius: 17px;
+            background: rgba(17,24,39,0.85);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: 0.2s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(99,102,241,0.5);
+        }
+
+        .problem-card.selected {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 1px #818cf8;
+        }
+
+        .problem-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .problem-number {
+            color: #818cf8;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .problem-card h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .problem-card p {
+            margin: 0;
+            color: #9ca3af;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .select-btn {
+            margin-top: 17px;
+            width: 100%;
+            padding: 11px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .select-btn:hover {
+            background: rgba(99,102,241,0.2);
+        }
+
+        .problem-card.selected .select-btn {
+            background: #6366f1;
+            border-color: #6366f1;
+        }
+
+        .selected-panel {
+            position: sticky;
+            bottom: 15px;
+            margin-top: 35px;
+            padding: 20px;
+            border-radius: 18px;
+            background: rgba(15,23,42,0.96);
+            border: 1px solid rgba(129,140,248,0.5);
+            backdrop-filter: blur(15px);
+            display: none;
+        }
+
+        .selected-panel.show {
+            display: block;
+        }
+
+        .selected-panel small {
+            color: #9ca3af;
+        }
+
+        .selected-panel h3 {
+            margin: 7px 0 5px;
+        }
+
+        .selected-panel p {
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            padding: 12px 18px;
+            border-radius: 11px;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,#6366f1,#8b5cf6);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.07);
+            color: white;
+        }
+
+        @media(max-width:750px) {
+
+            .page-head h1 {
+                font-size: 30px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .track-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-logo">
+        <strong>SANJIVANI</strong>
+        <span>NextGen Hackathon</span>
+    </div>
+
+    <a href="./dashboard.html" class="btn btn-secondary">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<main class="challenge-page">
+
+    <div class="page-head">
+        <h1>Choose Your Challenge</h1>
+        <p>
+            Explore the available problem statements and select one challenge
+            for your team.
+        </p>
+    </div>
+
+
+    <div class="challenge-info">
+
+        <div class="info-box">
+            <span>TEAM</span>
+            <strong>Team Innovators</strong>
+        </div>
+
+        <div class="info-box">
+            <span>REGISTRATION ID</span>
+            <strong>SNH-2026-0001</strong>
+        </div>
+
+        <div class="info-box">
+            <span>AVAILABLE TRACKS</span>
+            <strong>4 Tracks</strong>
+        </div>
+
+        <div class="info-box">
+            <span>PROBLEM STATEMENTS</span>
+            <strong>40 Challenges</strong>
+        </div>
+
+    </div>
+
+
+    <!-- TRACK 1 -->
+
+    <section class="track">
+
+        <div class="track-header">
+
+            <div>
+                <span class="track-number">TRACK 01</span>
+                <h2>Smart Campus & Smart City</h2>
+            </div>
+
+        </div>
+
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <div class="problem-top">
+                    <span class="problem-number">01</span>
+                </div>
+
+                <h3>Smart Campus Operations & Navigation App</h3>
+
+                <p>
+                    Develop a platform for campus navigation, room discovery,
+                    event discovery, booking and live availability.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Smart Campus Operations & Navigation App','Smart Campus & Smart City','01')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">02</span>
+
+                <h3>Micro-Mobility Route Optimization & Ride Pooling</h3>
+
+                <p>
+                    Build intelligent route and ride-pooling systems with
+                    dynamic dispatch and ETA management.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Micro-Mobility Route Optimization & Ride Pooling','Smart Campus & Smart City','02')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">03</span>
+
+                <h3>Computer Vision for Parking & Occupancy Analytics</h3>
+
+                <p>
+                    Create a system for monitoring parking spaces and
+                    occupancy of campus facilities.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Computer Vision for Parking & Occupancy Analytics','Smart Campus & Smart City','03')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">04</span>
+
+                <h3>Smart Energy & Resource Anomaly Detection Dashboard</h3>
+
+                <p>
+                    Monitor energy, HVAC and water usage and identify unusual
+                    consumption patterns.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Smart Energy & Resource Anomaly Detection Dashboard','Smart Campus & Smart City','04')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">05</span>
+
+                <h3>Automated Citizen / Student Grievance Redressal Portal</h3>
+
+                <p>
+                    Build a workflow platform for submitting, categorizing,
+                    prioritizing and tracking grievances.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Automated Citizen / Student Grievance Redressal Portal','Smart Campus & Smart City','05')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">06</span>
+
+                <h3>EV Charging Network & Smart Queue Management Software</h3>
+
+                <p>
+                    Provide EV charging reservations, queue management and
+                    charging availability.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'EV Charging Network & Smart Queue Management Software','Smart Campus & Smart City','06')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">07</span>
+
+                <h3>Unified Safety & Emergency Alert Mobile System</h3>
+
+                <p>
+                    Create an emergency communication platform with SOS,
+                    location alerts and evacuation support.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Unified Safety & Emergency Alert Mobile System','Smart Campus & Smart City','07')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">08</span>
+
+                <h3>Campus & City Waste Analytics Platform</h3>
+
+                <p>
+                    Track waste collection, bin status, collection routes
+                    and environmental impact.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Campus & City Waste Analytics Platform','Smart Campus & Smart City','08')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">09</span>
+
+                <h3>AI-Powered Smart Library & Learning Resource Hub</h3>
+
+                <p>
+                    Provide resource discovery, seat availability and
+                    digital learning support.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'AI-Powered Smart Library & Learning Resource Hub','Smart Campus & Smart City','09')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+
+            <div class="problem-card">
+                <span class="problem-number">10</span>
+
+                <h3>Digital Twin Dashboard for Campus Infrastructure</h3>
+
+                <p>
+                    Visualize campus infrastructure, assets, occupancy and
+                    operational information through a digital dashboard.
+                </p>
+
+                <button class="select-btn"
+                    onclick="selectChallenge(this,'Digital Twin Dashboard for Campus Infrastructure','Smart Campus & Smart City','10')">
+                    SELECT CHALLENGE
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRACK 2 -->
+
+    <section class="track">
+
+        <div class="track-header">
+            <div>
+                <span class="track-number">TRACK 02</span>
+                <h2>FinTech & Entrepreneurship</h2>
+            </div>
+        </div>
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <span class="problem-number">01</span>
+                <h3>Proof of Human Identification Against AI Deepfakes</h3>
+                <p>Develop technology to improve identity verification during digital onboarding.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Proof of Human Identification Against AI Deepfakes in Digital Onboarding','FinTech & Entrepreneurship','01')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">02</span>
+                <h3>Underwriting Credit for Non-Traditional Workers</h3>
+                <p>Create alternative methods for assessing creditworthiness of informal workers.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Underwriting Credit for Non-Traditional & Informal Economy Workers','FinTech & Entrepreneurship','02')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">03</span>
+                <h3>Frictionless Cross-Border B2B Payments</h3>
+                <p>Design a compliance-aware platform for international business payments.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Frictionless, Compliance-Aware Cross-Border B2B Payments','FinTech & Entrepreneurship','03')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">04</span>
+                <h3>Real-Time Fraud Prevention in Instant Payments</h3>
+                <p>Develop a platform for identifying suspicious instant payment transactions.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Real-Time Fraud Prevention in Instant Payment Rails','FinTech & Entrepreneurship','04')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">05</span>
+                <h3>Automated Multi-Jurisdictional RegTech</h3>
+                <p>Build technology to help fintech companies manage regulatory requirements.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Automated, Multi-Jurisdictional RegTech for Global Fintech Scaling','FinTech & Entrepreneurship','05')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">06</span>
+                <h3>Portable Personal Credit History</h3>
+                <p>Create a secure concept for portable credit information across borders.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Portable Personal Credit History Across Borders','FinTech & Entrepreneurship','06')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">07</span>
+                <h3>Instant Liquidity for SME Invoice Supply Chains</h3>
+                <p>Design a platform helping SMEs access liquidity against invoices.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Instant Liquidity Solutions for SME Invoice Supply Chains','FinTech & Entrepreneurship','07')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">08</span>
+                <h3>Explainable AI in Financial Underwriting</h3>
+                <p>Improve transparency and explainability of automated financial decisions.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Explainable AI (XAI) in Automated Financial Underwriting','FinTech & Entrepreneurship','08')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">09</span>
+                <h3>Privacy-Preserving Financial Data Sharing</h3>
+                <p>Develop a secure approach for sharing useful financial information while protecting privacy.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Privacy-Preserving Financial Data Sharing','FinTech & Entrepreneurship','09')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">10</span>
+                <h3>Automated Capital Allocation for Micro-Equity</h3>
+                <p>Design a platform for capital allocation and startup secondary markets.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Automated Capital Allocation for Micro-Equity & Startup Secondary Markets','FinTech & Entrepreneurship','10')">SELECT CHALLENGE</button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRACK 3 -->
+
+    <section class="track">
+
+        <div class="track-header">
+            <div>
+                <span class="track-number">TRACK 03</span>
+                <h2>AI & Generative AI</h2>
+            </div>
+        </div>
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <span class="problem-number">01</span>
+                <h3>GenAI Multi-Modal Campus Navigation Agent</h3>
+                <p>Build a multimodal navigation and voice assistance experience.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'GenAI Multi-Modal Campus Navigation & Real-Time Voice Agent','AI & Generative AI','01')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">02</span>
+                <h3>Generative Architectural Design Simulator</h3>
+                <p>Explore generative designs while considering architectural and microclimate factors.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Generative Architectural Design & Microclimate Simulator','AI & Generative AI','02')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">03</span>
+                <h3>AI Copilot for Campus Governance</h3>
+                <p>Create an AI assistant for policy analysis and governance workflows.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'AI Copilot for Urban & Campus Governance Policy','AI & Generative AI','03')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">04</span>
+                <h3>Synthetic Sensor Data Generator</h3>
+                <p>Generate useful synthetic IoT sensor data for edge-system training and testing.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Synthetic Sensor Data Generator for Edge IoT Training','AI & Generative AI','04')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">05</span>
+                <h3>Generative Fleet & Micro-Mobility Dispatcher</h3>
+                <p>Develop multi-agent technology for fleet routing and dispatch.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Multi-Agent Generative AI Fleet & Micro-Mobility Dispatcher','AI & Generative AI','05')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">06</span>
+                <h3>Automated Code & Incident Remediation Agent</h3>
+                <p>Develop an AI system that assists with code and smart-grid incident remediation.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Automated Code & Incident Remediation Agent for Smart Grids','AI & Generative AI','06')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">07</span>
+                <h3>Dynamic Spatial Audio & Video Accessibility</h3>
+                <p>Improve accessibility through adaptive audio and visual experiences.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'AI-Powered Dynamic Spatial Audio & Video Accessibility Engine','AI & Generative AI','07')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">08</span>
+                <h3>Generative Urban Digital Twin Scenario Engine</h3>
+                <p>Generate and compare possible urban scenarios using digital twin technology.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Generative Urban Digital Twin Scenario Engine','AI & Generative AI','08')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">09</span>
+                <h3>Multilingual Citizen Grievance Resolver</h3>
+                <p>Build a multilingual system for handling and resolving citizen and student grievances.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Autonomous Multilingual Citizen & Student Grievance Resolver','AI & Generative AI','09')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">10</span>
+                <h3>Adaptive AI Micro-Learning Platform</h3>
+                <p>Generate personalized learning experiences for campus students.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'AI-Generated Personalized Adaptive Micro-Learning for Campuses','AI & Generative AI','10')">SELECT CHALLENGE</button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRACK 4 -->
+
+    <section class="track">
+
+        <div class="track-header">
+            <div>
+                <span class="track-number">TRACK 04</span>
+                <h2>Sustainability & Smart Agriculture</h2>
+            </div>
+        </div>
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <span class="problem-number">01</span>
+                <h3>Hyperlocal Crop Waste Exchange</h3>
+                <p>Create a circular marketplace for agricultural waste and reusable resources.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Hyperlocal Crop Waste Exchange & Circular Marketplace','Sustainability & Smart Agriculture','01')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">02</span>
+                <h3>Farm-Level Water Loss Detection</h3>
+                <p>Develop a system to detect and reduce water losses on farms.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Farm-Level Water Loss Detection System','Sustainability & Smart Agriculture','02')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">03</span>
+                <h3>Agricultural Plastic Recovery Network</h3>
+                <p>Track agricultural plastic collection, recovery and recycling.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Agricultural Plastic Recovery & Tracking Network','Sustainability & Smart Agriculture','03')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">04</span>
+                <h3>Soil Health Digital Passport</h3>
+                <p>Create a digital record for tracking long-term soil health.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Soil Health Digital Passport','Sustainability & Smart Agriculture','04')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">05</span>
+                <h3>Post-Harvest Loss Prediction</h3>
+                <p>Help predict, reduce and redistribute agricultural post-harvest losses.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Post-Harvest Loss Prediction & Redistribution Platform','Sustainability & Smart Agriculture','05')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">06</span>
+                <h3>Solar-Powered Farm Energy Sharing</h3>
+                <p>Design a network for sharing renewable energy among farms.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Solar-Powered Farm Energy Sharing Network','Sustainability & Smart Agriculture','06')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">07</span>
+                <h3>Sustainable Fertilizer Optimization</h3>
+                <p>Develop a system to optimize fertilizer and agricultural inputs.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Sustainable Fertilizer & Input Optimization System','Sustainability & Smart Agriculture','07')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">08</span>
+                <h3>Farm-to-Market Carbon Tracking</h3>
+                <p>Track carbon emissions and resource consumption across the supply chain.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Farm-to-Market Carbon & Resource Tracking System','Sustainability & Smart Agriculture','08')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">09</span>
+                <h3>Community Smart Irrigation Coordination</h3>
+                <p>Coordinate irrigation resources among farms at community level.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Community-Level Smart Irrigation Coordination','Sustainability & Smart Agriculture','09')">SELECT CHALLENGE</button>
+            </div>
+
+            <div class="problem-card">
+                <span class="problem-number">10</span>
+                <h3>Climate-Resilient Crop Planning</h3>
+                <p>Match crop planning with climate conditions and available local resources.</p>
+                <button class="select-btn" onclick="selectChallenge(this,'Climate-Resilient Crop Planning & Local Resource Matching','Sustainability & Smart Agriculture','10')">SELECT CHALLENGE</button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SELECTED CHALLENGE -->
+
+    <div class="selected-panel" id="selectedPanel">
+
+        <small>SELECTED PROBLEM STATEMENT</small>
+
+        <h3 id="selectedTitle"></h3>
+
+        <p id="selectedTrack"></p>
+
+        <div class="panel-actions">
+
+            <button class="btn btn-primary" onclick="confirmChallenge()">
+                CONFIRM CHALLENGE
+            </button>
+
+            <button class="btn btn-secondary" onclick="clearChallenge()">
+                CHANGE
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+let selectedChallenge = null;
+
+
+function selectChallenge(button, title, track, number) {
+
+    document
+        .querySelectorAll(".problem-card")
+        .forEach(card => card.classList.remove("selected"));
+
+    document
+        .querySelectorAll(".select-btn")
+        .forEach(btn => btn.textContent = "SELECT CHALLENGE");
+
+
+    const card = button.closest(".problem-card");
+
+    card.classList.add("selected");
+
+    button.textContent = "✓ SELECTED";
+
+
+    selectedChallenge = {
+        title: title,
+        track: track,
+        number: number
+    };
+
+
+    document.getElementById("selectedTitle").textContent =
+        title;
+
+    document.getElementById("selectedTrack").textContent =
+        track + " • Problem Statement " + number;
+
+    document
+        .getElementById("selectedPanel")
+        .classList.add("show");
+
+}
+
+
+function confirmChallenge() {
+
+    if (!selectedChallenge) {
+        alert("Please select a challenge first.");
+        return;
+    }
+
+
+    localStorage.setItem(
+        "snh_selected_challenge",
+        JSON.stringify(selectedChallenge)
+    );
+
+
+    alert(
+        "Challenge confirmed successfully!\n\n" +
+        selectedChallenge.title
+    );
+
+
+    window.location.href = "./dashboard.html";
+
+}
+
+
+function clearChallenge() {
+
+    selectedChallenge = null;
+
+    document
+        .querySelectorAll(".problem-card")
+        .forEach(card => card.classList.remove("selected"));
+
+    document
+        .querySelectorAll(".select-btn")
+        .forEach(btn => btn.textContent = "SELECT CHALLENGE");
+
+    document
+        .getElementById("selectedPanel")
+        .classList.remove("show");
+
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+</body>
+</html>

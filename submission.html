@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Submission | Sanjivani NextGen Hackathon</title>
+
+    <link rel="stylesheet" href="./main.css">
+
+    <style>
+        .submission-page {
+            max-width: 1000px;
+            margin: auto;
+            padding: 45px 20px 80px;
+        }
+
+        .page-head {
+            margin-bottom: 30px;
+        }
+
+        .page-head h1 {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .page-head p {
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        .submission-card {
+            background: rgba(17,24,39,0.88);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 22px;
+            padding: 28px;
+            margin-bottom: 22px;
+        }
+
+        .submission-card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .required {
+            color: #f87171;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #0f172a;
+            color: white;
+            outline: none;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #6366f1;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .upload-box {
+            border: 1px dashed rgba(129,140,248,0.5);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            background: rgba(99,102,241,0.05);
+        }
+
+        .upload-box strong {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .upload-box p {
+            color: #9ca3af;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        input[type="file"] {
+            border: none;
+            background: transparent;
+            padding: 5px;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            color: #86efac;
+            font-size: 13px;
+        }
+
+        .check-row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+
+        .check-row input {
+            width: auto;
+            margin-top: 4px;
+        }
+
+        .check-row label {
+            color: #d1d5db;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(135deg,#6366f1,#8b5cf6);
+        }
+
+        .btn-secondary {
+            color: white;
+            background: rgba(255,255,255,0.07);
+        }
+
+        .status-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 18px;
+            border-radius: 15px;
+            background: rgba(245,158,11,0.08);
+            border: 1px solid rgba(245,158,11,0.2);
+            margin-bottom: 25px;
+        }
+
+        .status-box small {
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .status-box span {
+            color: #d1d5db;
+            font-size: 13px;
+        }
+
+        .success-message {
+            display: none;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.3);
+            color: #86efac;
+            margin-top: 20px;
+        }
+
+        .submission-id {
+            font-size: 20px;
+            font-weight: 800;
+            margin-top: 7px;
+        }
+
+        .rules {
+            color: #9ca3af;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        @media(max-width:700px) {
+            .page-head h1 {
+                font-size: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-box {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-logo">
+        <strong>SANJIVANI</strong>
+        <span>NextGen Hackathon</span>
+    </div>
+
+    <a href="./dashboard.html" class="btn btn-secondary">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<main class="submission-page">
+
+    <div class="page-head">
+
+        <h1>Project Submission</h1>
+
+        <p>
+            Submit your final project information, documentation and demo
+            details for evaluation.
+        </p>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="status-box">
+
+        <div>
+            <small>SUBMISSION STATUS</small>
+            <br>
+            <span id="statusText">Not Submitted</span>
+        </div>
+
+        <div>
+            <small>REGISTRATION ID</small>
+            <br>
+            <span>SNH-2026-0001</span>
+        </div>
+
+    </div>
+
+
+    <!-- PROJECT INFORMATION -->
+
+    <section class="submission-card">
+
+        <h2>01 — Project Information</h2>
+
+        <p class="section-description">
+            Provide the basic information about your project.
+        </p>
+
+
+        <div class="form-group">
+
+            <label>
+                Project Title <span class="required">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="projectTitle"
+                placeholder="Enter your project title"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Selected Track
+                </label>
+
+                <select id="projectTrack">
+
+                    <option value="">
+                        Select track
+                    </option>
+
+                    <option>
+                        Smart Campus & Smart City
+                    </option>
+
+                    <option>
+                        FinTech & Entrepreneurship
+                    </option>
+
+                    <option>
+                        AI & Generative AI
+                    </option>
+
+                    <option>
+                        Sustainability & Smart Agriculture
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Technology Stack
+                </label>
+
+                <input
+                    type="text"
+                    id="techStack"
+                    placeholder="HTML, JavaScript, Python, Flutter..."
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Project Description <span class="required">*</span>
+            </label>
+
+            <textarea
+                id="projectDescription"
+                placeholder="Explain what your project does..."
+                required
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Problem Being Solved <span class="required">*</span>
+            </label>
+
+            <textarea
+                id="problem"
+                placeholder="Explain the real-world problem your project addresses..."
+                required
+            ></textarea>
+
+        </div>
+
+    </section>
+
+
+    <!-- SOLUTION -->
+
+    <section class="submission-card">
+
+        <h2>02 — Solution & Impact</h2>
+
+        <p class="section-description">
+            Explain your solution and the impact it can create.
+        </p>
+
+
+        <div class="form-group">
+
+            <label>
+                Proposed Solution <span class="required">*</span>
+            </label>
+
+            <textarea
+                id="solution"
+                placeholder="Explain your solution, major features and working..."
+                required
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Expected Impact
+            </label>
+
+            <textarea
+                id="impact"
+                placeholder="Who will benefit from your project and how?"
+            ></textarea>
+
+        </div>
+
+    </section>
+
+
+    <!-- LINKS -->
+
+    <section class="submission-card">
+
+        <h2>03 — Project Links</h2>
+
+        <p class="section-description">
+            Add links that judges can use to review your project.
+        </p>
+
+
+        <div class="form-group">
+
+            <label>
+                GitHub Repository
+            </label>
+
+            <input
+                type="url"
+                id="github"
+                placeholder="https://github.com/your-project"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Live Demo / Website
+            </label>
+
+            <input
+                type="url"
+                id="demo"
+                placeholder="https://your-project.pages.dev"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Demo Video
+            </label>
+
+            <input
+                type="url"
+                id="video"
+                placeholder="YouTube / Drive / other demo video link"
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- DOCUMENTS -->
+
+    <section class="submission-card">
+
+        <h2>04 — Submission Documents</h2>
+
+        <p class="section-description">
+            Upload the documents required for project evaluation.
+        </p>
+
+
+        <div class="upload-box">
+
+            <strong>Project Presentation / PPT</strong>
+
+            <p>
+                Upload your project presentation.
+                Recommended format: PDF or PPT/PPTX.
+            </p>
+
+            <input
+                type="file"
+                id="pptFile"
+                accept=".pdf,.ppt,.pptx"
+            >
+
+            <div class="file-name" id="pptName"></div>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="upload-box">
+
+            <strong>Project Documentation</strong>
+
+            <p>
+                Upload your project documentation.
+                Recommended format: PDF.
+            </p>
+
+            <input
+                type="file"
+                id="docFile"
+                accept=".pdf,.doc,.docx"
+            >
+
+            <div class="file-name" id="docName"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DECLARATION -->
+
+    <section class="submission-card">
+
+        <h2>05 — Declaration</h2>
+
+        <div class="check-row">
+
+            <input
+                type="checkbox"
+                id="declaration"
+            >
+
+            <label for="declaration">
+
+                I confirm that the information submitted above is accurate
+                and that the project has been developed by our registered
+                team. I understand that the submission may be evaluated
+                according to the hackathon's official judging criteria.
+
+            </label>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="submitProject()"
+            >
+                SUBMIT PROJECT →
+            </button>
+
+            <a
+                href="./dashboard.html"
+                class="btn btn-secondary"
+            >
+                SAVE & RETURN
+            </a>
+
+        </div>
+
+
+        <div
+            class="success-message"
+            id="successMessage"
+        >
+
+            <strong>✓ Project Submitted Successfully</strong>
+
+            <div>
+                Your submission ID:
+            </div>
+
+            <div
+                class="submission-id"
+                id="submissionId"
+            ></div>
+
+            <p>
+                Your project has been marked as submitted in this demo
+                version.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- GUIDELINES -->
+
+    <section class="submission-card">
+
+        <h2>Submission Guidelines</h2>
+
+        <ul class="rules">
+
+            <li>Submit complete and accurate project information.</li>
+
+            <li>Make sure your GitHub or demo link is accessible to judges.</li>
+
+            <li>Do not submit confidential credentials, passwords or API keys.</li>
+
+            <li>Uploaded documents should be readable and relevant to the project.</li>
+
+            <li>Only the registered team should submit the project.</li>
+
+        </ul>
+
+    </section>
+
+</main>
+
+
+<script>
+
+function showFileName(inputId, outputId) {
+
+    const input = document.getElementById(inputId);
+
+    const output = document.getElementById(outputId);
+
+    input.addEventListener("change", function() {
+
+        if (this.files.length > 0) {
+
+            const file = this.files[0];
+
+            output.textContent =
+                "✓ Selected: " + file.name;
+
+        } else {
+
+            output.textContent = "";
+
+        }
+
+    });
+
+}
+
+
+showFileName("pptFile", "pptName");
+
+showFileName("docFile", "docName");
+
+
+function submitProject() {
+
+    const title =
+        document.getElementById("projectTitle").value.trim();
+
+    const description =
+        document.getElementById("projectDescription").value.trim();
+
+    const problem =
+        document.getElementById("problem").value.trim();
+
+    const solution =
+        document.getElementById("solution").value.trim();
+
+    const declaration =
+        document.getElementById("declaration").checked;
+
+
+    if (!title || !description || !problem || !solution) {
+
+        alert(
+            "Please complete all required project information."
+        );
+
+        return;
+    }
+
+
+    if (!declaration) {
+
+        alert(
+            "Please accept the declaration before submitting."
+        );
+
+        return;
+    }
+
+
+    const submissionId =
+        "SUB-" +
+        new Date().getFullYear() +
+        "-" +
+        Math.floor(10000 + Math.random() * 90000);
+
+
+    localStorage.setItem(
+        "snh_submission_status",
+        "submitted"
+    );
+
+
+    localStorage.setItem(
+        "snh_submission_id",
+        submissionId
+    );
+
+
+    localStorage.setItem(
+        "snh_project_title",
+        title
+    );
+
+
+    document.getElementById("submissionId").textContent =
+        submissionId;
+
+
+    document.getElementById("successMessage").style.display =
+        "block";
+
+
+    document.getElementById("statusText").textContent =
+        "Submitted • Under Evaluation";
+
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+</body>
+</html>

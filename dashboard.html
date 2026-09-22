@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Team Dashboard | Sanjivani NextGen Hackathon</title>
+
+    <link rel="stylesheet" href="./main.css">
+
+    <style>
+
+        body {
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(77,124,255,.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(139,92,246,.12),
+                    transparent 30%
+                ),
+                #050711;
+        }
+
+        .dashboard-page {
+            min-height: 100vh;
+            padding: 100px 18px 60px;
+        }
+
+        .dashboard-container {
+            width: min(1100px, 100%);
+            margin: auto;
+        }
+
+        .dashboard-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .welcome small {
+            color: #35d7ff;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+
+        .welcome h1 {
+            margin-top: 8px;
+            font-size: clamp(28px, 5vw, 45px);
+            letter-spacing: -2px;
+        }
+
+        .welcome p {
+            margin-top: 8px;
+            color: #78849a;
+            font-size: 10px;
+        }
+
+        .team-id {
+            padding: 12px 17px;
+            border-radius: 12px;
+            border: 1px solid rgba(53,215,255,.15);
+            background: rgba(53,215,255,.05);
+            text-align: right;
+        }
+
+        .team-id small {
+            display: block;
+            color: #68748a;
+            font-size: 7px;
+            margin-bottom: 5px;
+        }
+
+        .team-id strong {
+            color: #35d7ff;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .status-card {
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.035);
+        }
+
+        .status-card small {
+            color: #68748a;
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .status-card h3 {
+            margin-top: 9px;
+            font-size: 15px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 9px;
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #42d99a;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.35fr .65fr;
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,.08);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.06),
+                    rgba(255,255,255,.025)
+                );
+            backdrop-filter: blur(15px);
+        }
+
+        .card-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .card-heading h2 {
+            font-size: 17px;
+        }
+
+        .card-heading span {
+            color: #69758b;
+            font-size: 8px;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 13px 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row span {
+            color: #68748a;
+            font-size: 9px;
+        }
+
+        .info-row strong {
+            color: #dce2ed;
+            font-size: 9px;
+            text-align: right;
+        }
+
+        .track {
+            color: #35d7ff !important;
+        }
+
+        .progress-area {
+            margin-top: 25px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            color: #78849a;
+            font-size: 8px;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 7px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.07);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 45%;
+            height: 100%;
+            border-radius: inherit;
+            background:
+                linear-gradient(
+                    90deg,
+                    #35d7ff,
+                    #4d7cff,
+                    #8b5cf6
+                );
+        }
+
+        .actions {
+            display: grid;
+            gap: 10px;
+        }
+
+        .action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.07);
+            background: rgba(0,0,0,.15);
+            color: #cbd3e1;
+            text-decoration: none;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .action:hover {
+            border-color: rgba(53,215,255,.25);
+            transform: translateX(2px);
+        }
+
+        .action span {
+            color: #35d7ff;
+            font-size: 13px;
+        }
+
+        .announcement {
+            margin-top: 20px;
+        }
+
+        .announcement-item {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-item strong {
+            display: block;
+            color: #dce2ed;
+            font-size: 9px;
+        }
+
+        .announcement-item p {
+            margin-top: 5px;
+            color: #68748a;
+            font-size: 8px;
+            line-height: 1.5;
+        }
+
+        .announcement-item time {
+            display: block;
+            margin-top: 6px;
+            color: #35d7ff;
+            font-size: 7px;
+        }
+
+        .logout {
+            margin-top: 15px;
+            width: 100%;
+            height: 42px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: transparent;
+            color: #7d889c;
+            cursor: pointer;
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .logout:hover {
+            color: white;
+            border-color: rgba(255,255,255,.18);
+        }
+
+        @media(max-width:800px) {
+
+            .status-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width:550px) {
+
+            .dashboard-page {
+                padding: 80px 13px 40px;
+            }
+
+            .dashboard-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .team-id {
+                width: 100%;
+                text-align: left;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .dashboard-card {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<section class="dashboard-page">
+
+    <div class="dashboard-container">
+
+        <!-- HEADER -->
+
+        <div class="dashboard-top">
+
+            <div class="welcome">
+
+                <small>
+                    SANJIVANI NEXTGEN HACKATHON
+                </small>
+
+                <h1>
+                    Team Dashboard
+                </h1>
+
+                <p>
+                    Manage your hackathon journey from one place.
+                </p>
+
+            </div>
+
+            <div class="team-id">
+
+                <small>
+                    REGISTRATION ID
+                </small>
+
+                <strong id="registrationId">
+                    SNH-2026-0001
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS CARDS -->
+
+        <div class="status-grid">
+
+            <div class="status-card">
+
+                <small>
+                    REGISTRATION
+                </small>
+
+                <h3>
+                    Confirmed
+                </h3>
+
+                <div class="status">
+                    <span class="dot"></span>
+                    Active
+                </div>
+
+            </div>
+
+
+            <div class="status-card">
+
+                <small>
+                    PAYMENT
+                </small>
+
+                <h3>
+                    Under Review
+                </h3>
+
+                <div class="status">
+                    <span class="dot"></span>
+                    Verification
+                </div>
+
+            </div>
+
+
+            <div class="status-card">
+
+                <small>
+                    TEAM STATUS
+                </small>
+
+                <h3>
+                    Complete
+                </h3>
+
+                <div class="status">
+                    <span class="dot"></span>
+                    Ready
+                </div>
+
+            </div>
+
+
+            <div class="status-card">
+
+                <small>
+                    SUBMISSION
+                </small>
+
+                <h3>
+                    Not Started
+                </h3>
+
+                <div class="status">
+                    <span
+                        class="dot"
+                        style="background:#f0b84b;"
+                    ></span>
+                    Pending
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="main-grid">
+
+
+            <!-- LEFT -->
+
+            <div>
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <h2>
+                            Team Information
+                        </h2>
+
+                        <span>
+                            YOUR TEAM
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-list">
+
+                        <div class="info-row">
+
+                            <span>
+                                Team Name
+                            </span>
+
+                            <strong id="teamName">
+                                NextGen Innovators
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>
+                                Team Leader
+                            </span>
+
+                            <strong>
+                                Yash Anil Davange
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>
+                                Institution
+                            </span>
+
+                            <strong>
+                                Sanjivani University
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>
+                                Selected Track
+                            </span>
+
+                            <strong class="track">
+                                Smart Campus & Smart City
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>
+                                Team Size
+                            </span>
+
+                            <strong>
+                                4 Members
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-area">
+
+                        <div class="progress-label">
+
+                            <span>
+                                Hackathon Journey
+                            </span>
+
+                            <span>
+                                45%
+                            </span>
+
+                        </div>
+
+                        <div class="progress-bar">
+
+                            <div class="progress-fill"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ANNOUNCEMENTS -->
+
+                <div class="dashboard-card announcement">
+
+                    <div class="card-heading">
+
+                        <h2>
+                            Announcements
+                        </h2>
+
+                        <span>
+                            LATEST
+                        </span>
+
+                    </div>
+
+
+                    <div class="announcement-item">
+
+                        <strong>
+                            Welcome to Sanjivani NextGen
+                        </strong>
+
+                        <p>
+                            Your team registration has been
+                            received successfully.
+                        </p>
+
+                        <time>
+                            NEW
+                        </time>
+
+                    </div>
+
+
+                    <div class="announcement-item">
+
+                        <strong>
+                            Payment verification
+                        </strong>
+
+                        <p>
+                            Keep your payment transaction details
+                            available for verification.
+                        </p>
+
+                        <time>
+                            INFORMATION
+                        </time>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div>
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <a
+                            href="./team.html"
+                            class="action"
+                        >
+                            Manage Team
+                            <span>→</span>
+                        </a>
+
+
+                        <a
+                            href="./challenge.html"
+                            class="action"
+                        >
+                            View Challenge
+                            <span>→</span>
+                        </a>
+
+
+                        <a
+                            href="./submission.html"
+                            class="action"
+                        >
+                            Submit Project
+                            <span>→</span>
+                        </a>
+
+
+                        <a
+                            href="./tracking.html"
+                            class="action"
+                        >
+                            Track Progress
+                            <span>→</span>
+                        </a>
+
+
+                        <a
+                            href="./results.html"
+                            class="action"
+                        >
+                            Results
+                            <span>→</span>
+                        </a>
+
+
+                        <a
+                            href="./certificate.html"
+                            class="action"
+                        >
+                            Certificate
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+
+                    <button
+                        class="logout"
+                        onclick="logout()"
+                    >
+                        LOG OUT
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="dashboard-card"
+                    style="margin-top:20px;"
+                >
+
+                    <div class="card-heading">
+
+                        <h2>
+                            Need Help?
+                        </h2>
+
+                    </div>
+
+                    <p
+                        style="
+                        color:#6d788d;
+                        font-size:9px;
+                        line-height:1.7;
+                        "
+                    >
+                        For registration, payment or technical
+                        issues, contact the Sanjivani NextGen
+                        Hackathon organizing team.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function logout() {
+
+    const confirmLogout =
+        confirm("Do you want to log out?");
+
+    if (confirmLogout) {
+
+        window.location.href =
+            "./index.html";
+
+    }
+
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+</body>
+</html>
