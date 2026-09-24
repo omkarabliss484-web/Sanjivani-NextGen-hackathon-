@@ -1,1 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Register | Sanjivani NextGen Hackathon</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(99,91,255,.18), transparent 35%),
+        #070b14;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      width: 100%;
+      padding: 30px 18px 60px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .back {
+      display: inline-block;
+      color: #aeb8ff;
+      text-decoration: none;
+      margin-bottom: 45px;
+      font-size: 16px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 50px;
+      background: rgba(99,91,255,.1);
+      border: 1px solid rgba(99,91,255,.3);
+      color: #aeb8ff;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(35px, 8vw, 52px);
+      margin: 0;
+    }
+
+    .subtitle {
+      color: #9fa8ba;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: #111827;
+      border: 1px solid #273248;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 25px 70px rgba(0,0,0,.35);
+    }
+
+    .card-title {
+      font-size: 23px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .card-description {
+      color: #8994aa;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #d8deeb;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 52px;
+      padding: 0 15px;
+      border-radius: 13px;
+      border: 1px solid #303b52;
+      background: #0b1120;
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #756dff;
+      box-shadow: 0 0 0 3px rgba(99,91,255,.12);
+    }
+
+    .fee {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      margin: 8px 0 22px;
+      border-radius: 14px;
+      background: rgba(99,91,255,.08);
+      border: 1px solid rgba(99,91,255,.2);
+    }
+
+    .fee span {
+      color: #aab3c5;
+    }
+
+    .fee strong {
+      font-size: 20px;
+    }
+
+    button {
+      width: 100%;
+      height: 54px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg,#635bff,#7b74ff);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      display: none;
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 13px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .success {
+      display: block !important;
+      color: #b9f7d0;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.25);
+    }
+
+    .error {
+      display: block !important;
+      color: #ffb4b4;
+      background: rgba(239,68,68,.1);
+      border: 1px solid rgba(239,68,68,.3);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="container">
+
+    <a href="./index.html" class="back">
+      ← Back to Hackathon
+    </a>
+
+    <div class="header">
+
+      <div class="badge">
+        SANJIVANI NEXTGEN HACKATHON
+      </div>
+
+      <h1>Register Your Team</h1>
+
+      <p class="subtitle">
+        Create your account and register your team for the
+        Sanjivani NextGen Hackathon.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <div class="card-title">
+        Team Registration
+      </div>
+
+      <div class="card-description">
+        Enter your details to create your official hackathon account.
+      </div>
+
+      <form id="registerForm">
+
+        <div class="field">
+          <label>Team Leader Name *</label>
+
+          <input
+            id="fullName"
+            type="text"
+            placeholder="Enter full name"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label>Email Address *</label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="example@email.com"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label>Mobile Number *</label>
+
+          <input
+            id="mobile"
+            type="tel"
+            placeholder="10-digit mobile number"
+            maxlength="10"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label>College / University *</label>
+
+          <input
+            id="college"
+            type="text"
+            placeholder="Enter college / university"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label>Team Name *</label>
+
+          <input
+            id="teamName"
+            type="text"
+            placeholder="Enter team name"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label>Team Size *</label>
+
+          <select id="teamSize" required>
+
+            <option value="">
+              Select Team Size
+            </option>
+
+            <option value="1">1 Member</option>
+            <option value="2">2 Members</option>
+            <option value="3">3 Members</option>
+            <option value="4">4 Members</option>
+
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Create Password *</label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="Minimum 6 characters"
+            minlength="6"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label>Confirm Password *</label>
+
+          <input
+            id="confirmPassword"
+            type="password"
+            placeholder="Enter password again"
+            minlength="6"
+            required
+          >
+        </div>
+
+        <div class="fee">
+
+          <span>
+            Registration Fee
+          </span>
+
+          <strong>
+            ₹500
+          </strong>
+
+        </div>
+
+        <button
+          id="registerBtn"
+          type="submit"
+        >
+          CREATE ACCOUNT & REGISTER
+        </button>
+
+      </form>
+
+      <div id="message"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const form =
+  document.getElementById("registerForm");
+
+const message =
+  document.getElementById("message");
+
+const button =
+  document.getElementById("registerBtn");
+
+
+function showMessage(text, type) {
+
+  message.innerText = text;
+
+  message.className = type;
+
+  message.style.display = "block";
+}
+
+
+function generateRegistrationId() {
+
+  const number =
+    Math.floor(100000 + Math.random() * 900000);
+
+  return "SNH-2026-" + number;
+
+}
+
+
+/* ==================================================
+   COMPLETE REGISTRATION
+   ================================================== */
+
+async function completeRegistration() {
+
+  try {
+
+    showMessage(
+      "Creating your team registration...",
+      "success"
+    );
+
+
+    const {
+      data: {
+        session
+      },
+      error: sessionError
+    } = await supabaseClient.auth.getSession();
+
+
+    if (sessionError) {
+
+      console.error(sessionError);
+
+      showMessage(
+        "Could not verify your account: " +
+        sessionError.message,
+        "error"
+      );
+
+      return false;
+    }
+
+
+    if (!session) {
+
+      showMessage(
+        "Account created, but no active session was found. Please try again.",
+        "error"
+      );
+
+      return false;
+    }
+
+
+    const user =
+      session.user;
+
+
+    const metadata =
+      user.user_metadata || {};
+
+
+    /* ==================================================
+       CHECK EXISTING TEAM
+       ================================================== */
+
+    const {
+      data: existingTeam,
+      error: existingError
+    } = await supabaseClient
+      .from("teams")
+      .select("*")
+      .eq("leader_id", user.id)
+      .maybeSingle();
+
+
+    if (existingError) {
+
+      console.error(existingError);
+
+      showMessage(
+        "Failed to check your team: " +
+        existingError.message,
+        "error"
+      );
+
+      return false;
+    }
+
+
+    /* ==================================================
+       EXISTING REGISTRATION
+       ================================================== */
+
+    if (existingTeam) {
+
+      localStorage.setItem(
+        "snh_team_id",
+        existingTeam.id
+      );
+
+      localStorage.setItem(
+        "snh_registration_id",
+        existingTeam.registration_id
+      );
+
+
+      showMessage(
+        "Your registration already exists. Redirecting to payment...",
+        "success"
+      );
+
+
+      setTimeout(() => {
+
+        window.location.href =
+          "./payment.html";
+
+      }, 1200);
+
+
+      return true;
+    }
+
+
+    /* ==================================================
+       CREATE PROFILE
+       ================================================== */
+
+    const {
+      error: profileError
+    } = await supabaseClient
+      .from("profiles")
+      .upsert({
+
+        id:
+          user.id,
+
+        full_name:
+          metadata.full_name || "",
+
+        email:
+          user.email || "",
+
+        mobile:
+          metadata.mobile || "",
+
+        college:
+          metadata.college || ""
+
+      });
+
+
+    if (profileError) {
+
+      console.error(profileError);
+
+      showMessage(
+        "Failed to create your profile: " +
+        profileError.message,
+        "error"
+      );
+
+      return false;
+    }
+
+
+    /* ==================================================
+       CREATE TEAM
+       ================================================== */
+
+    let registrationId;
+
+    let teamData = null;
+
+    let teamError = null;
+
+
+    for (
+      let attempt = 0;
+      attempt < 5;
+      attempt++
+    ) {
+
+      registrationId =
+        generateRegistrationId();
+
+
+      const result =
+        await supabaseClient
+          .from("teams")
+          .insert({
+
+            registration_id:
+              registrationId,
+
+            leader_id:
+              user.id,
+
+            team_name:
+              metadata.team_name || "",
+
+            status:
+              "registered"
+
+          })
+          .select()
+          .single();
+
+
+      teamData =
+        result.data;
+
+      teamError =
+        result.error;
+
+
+      if (!teamError) {
+
+        break;
+
+      }
+
+
+      if (
+        !teamError.message
+          .toLowerCase()
+          .includes("duplicate")
+      ) {
+
+        break;
+      }
+
+    }
+
+
+    if (teamError) {
+
+      console.error(teamError);
+
+      showMessage(
+        "Failed to create your team: " +
+        teamError.message,
+        "error"
+      );
+
+      return false;
+    }
+
+
+    /* ==================================================
+       SAVE TEAM DATA
+       ================================================== */
+
+    localStorage.setItem(
+      "snh_team_id",
+      teamData.id
+    );
+
+    localStorage.setItem(
+      "snh_registration_id",
+      teamData.registration_id
+    );
+
+
+    localStorage.setItem(
+      "snh_team_name",
+      teamData.team_name
+    );
+
+
+    /* ==================================================
+       REDIRECT TO PAYMENT
+       ================================================== */
+
+    showMessage(
+      "Registration successful! Your ID is " +
+      teamData.registration_id +
+      ". Redirecting to payment...",
+      "success"
+    );
+
+
+    setTimeout(() => {
+
+      window.location.href =
+        "./payment.html";
+
+    }, 1200);
+
+
+    return true;
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "REGISTRATION ERROR:",
+      error
+    );
+
+    showMessage(
+      "Registration failed: " +
+      (error.message || error),
+      "error"
+    );
+
+    return false;
+  }
+
+}
+
+
+/* ==================================================
+   SIGNUP
+   ================================================== */
+
+form.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+
+    const fullName =
+      document.getElementById("fullName")
+        .value.trim();
+
+
+    const email =
+      document.getElementById("email")
+        .value.trim();
+
+
+    const mobile =
+      document.getElementById("mobile")
+        .value.trim();
+
+
+    const college =
+      document.getElementById("college")
+        .value.trim();
+
+
+    const teamName =
+      document.getElementById("teamName")
+        .value.trim();
+
+
+    const teamSize =
+      Number(
+        document.getElementById("teamSize")
+          .value
+      );
+
+
+    const password =
+      document.getElementById("password")
+        .value;
+
+
+    const confirmPassword =
+      document.getElementById("confirmPassword")
+        .value;
+
+
+    /* ==================================================
+       VALIDATION
+       ================================================== */
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+
+      showMessage(
+        "Enter a valid 10-digit mobile number.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (password.length < 6) {
+
+      showMessage(
+        "Password must contain at least 6 characters.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (password !== confirmPassword) {
+
+      showMessage(
+        "Passwords do not match.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+      "CREATING ACCOUNT...";
+
+
+    try {
+
+      /* ==================================================
+         SIGN UP
+         ================================================== */
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signUp({
+
+          email:
+            email,
+
+          password:
+            password,
+
+          options: {
+
+            data: {
+
+              full_name:
+                fullName,
+
+              mobile:
+                mobile,
+
+              college:
+                college,
+
+              team_name:
+                teamName,
+
+              team_size:
+                teamSize
+
+            }
+
+          }
+
+        });
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      console.log(
+        "SIGNUP RESPONSE:",
+        data
+      );
+
+
+      /* ==================================================
+         CONFIRM EMAIL OFF
+         SESSION SHOULD EXIST
+         ================================================== */
+
+      if (data.session) {
+
+        await completeRegistration();
+
+      }
+
+      else {
+
+        showMessage(
+          "Account created, but no active session was returned. Please check that Confirm Email is OFF in Supabase Authentication settings.",
+          "error"
+        );
+
+      }
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "SIGNUP ERROR:",
+        error
+      );
+
+      showMessage(
+        "Registration error: " +
+        (error.message || error),
+        "error"
+      );
+
+    }
+
+    finally {
+
+      button.disabled = false;
+
+      button.innerText =
+        "CREATE ACCOUNT & REGISTER";
+
+    }
+
+  }
+);
+
+
+/* ==================================================
+   AUTH STATE
+   ==================================================
+
+   This handles an already logged-in user.
+   It will NOT be needed for normal signup when
+   Confirm Email is OFF, but it is useful if the
+   page is reopened after login.
+*/
+
+supabaseClient.auth.onAuthStateChange(
+  (event, session) => {
+
+    console.log(
+      "AUTH EVENT:",
+      event
+    );
+
+
+    if (
+      session &&
+      event === "SIGNED_IN"
+    ) {
+
+      setTimeout(() => {
+
+        completeRegistration();
+
+      }, 500);
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+  </html>
